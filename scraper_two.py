@@ -2,22 +2,20 @@
 from bs4 import BeautifulSoup
 import requests
 
-# Correct URL for Apple's stock data
+
 url = "https://finance.yahoo.com/quote/AAPL"
 
 def get_apple_stock_data():
-    # Fetch the content from the URL
+   
     response = requests.get(url)
     
-    # Check if the request was successful
+   
     if response.status_code != 200:
         print(f"Failed to retrieve data: HTTP Status Code {response.status_code}")
         return
 
-    # Parse the content using BeautifulSoup
     soup = BeautifulSoup(response.content, 'html.parser')
 
-    # Find the current price and other relevant data
     try:
         current_price = soup.find('fin-streamer', {'data-field': 'regularMarketPrice'}).text.strip()
         previous_close = soup.find('fin-streamer', {'data-field': 'regularMarketPreviousClose'}).text.strip()
